@@ -31,14 +31,14 @@ public class RedismqApplication {
     }
 
     @Bean
-    RedisMessageListenerContainer container(RedisConnectionFactory factory, MessageListenerAdapter aaa) {
+    RedisMessageListenerContainer container(RedisConnectionFactory factory, MessageListenerAdapter listenerAdapter) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(factory);
-        container.addMessageListener(aaa, new PatternTopic("chat"));
+        container.addMessageListener(listenerAdapter, new PatternTopic("chat"));
         return container;
     }
 
-    @Bean("bbb")
+    @Bean()
     MessageListenerAdapter listenerAdapter(Receiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
